@@ -1,0 +1,17 @@
+BBBBBBBBBBBBBBBBB   YYYYYYY       YYYYYYY           AAA           UUUUUUUU     UUUUUUUU
+B::::::::::::::::B  Y:::::Y       Y:::::Y          A:::A          U::::::U     U::::::U
+B::::::BBBBBB:::::B Y:::::Y       Y:::::Y         A:::::A         U::::::U     U::::::U
+BB:::::B     B:::::BY::::::Y     Y::::::Y        A:::::::A        UU:::::U     U:::::UU
+  B::::B     B:::::BYYY:::::Y   Y:::::YYY       A:::::::::A        U:::::U     U:::::U
+  B::::B     B:::::B   Y:::::Y Y:::::Y         A:::::A:::::A       U:::::D     D:::::U
+  B::::BBBBBB:::::B     Y:::::Y:::::Y         A:::::A A:::::A      U:::::D     D:::::U
+  B:::::::::::::BB       Y:::::::::Y         A:::::A   A:::::A     U:::::D     D:::::U
+  B::::BBBBBB:::::B       Y:::::::Y         A:::::A     A:::::A    U:::::D     D:::::U
+  B::::B     B:::::B       Y:::::Y         A:::::AAAAAAAAA:::::A   U:::::D     D:::::U
+  B::::B     B:::::B       Y:::::Y        A:::::::::::::::::::::A  U:::::D     D:::::U
+  B::::B     B:::::B       Y:::::Y       A:::::AAAAAAAAAAAAA:::::A U::::::U   U::::::U
+BB:::::BBBBBB::::::B       Y:::::Y      A:::::A             A:::::AU:::::::UUU:::::::U
+B:::::::::::::::::B     YYYY:::::YYYY  A:::::A               A:::::AUU:::::::::::::UU
+B::::::::::::::::B      Y:::::::::::Y A:::::A                 A:::::A UU:::::::::UU
+BBBBBBBBBBBBBBBBB       YYYYYYYYYYYYYAAAAAAA                   AAAAAAA  UUUUUUUUU
+

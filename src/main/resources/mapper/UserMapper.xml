@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.zhangliyuanblog.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="club.zhangliyuanblog.entity.User">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="age" property="age" />
+        <result column="phone" property="phone" />
+        <result column="password" property="password" />
+        <result column="brief" property="brief" />
+        <result column="create_time" property="create_time" />
+        <result column="update_time" property="update_time" />
+        <result column="header_pic" property="header_pic" />
+    </resultMap>
+
+    <select id="selectUserByArticleNums" resultType="club.zhangliyuanblog.entity.User">
+        select su.*
+        from s_user su join s_article sa on su.id = sa.user_id group by su.id order by count(sa.id) desc limit 3;
+    </select>
+
+</mapper>

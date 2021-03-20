@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.zhangliyuanblog.mapper.ArticleMapper">
+
+
+    <resultMap id="ArticleVo" type="club.zhangliyuanblog.vo.ArticleVo">
+        <id property="id" column="id"/>
+        <result property="create_time" column="create_time"/>
+        <result property="thematic" column="thematic"/>
+        <result property="context" column="context"/>
+        <result property="title" column="title"/>
+        <collection property="types" column="id" select="club.zhangliyuanblog.mapper.TypeMapper.selectTypesByArticleId"/>
+    </resultMap>
+
+    <select id="selectArticleById" resultMap="ArticleVo">
+        select *
+        from s_article
+        where id = #{id}
+    </select>
+</mapper>
