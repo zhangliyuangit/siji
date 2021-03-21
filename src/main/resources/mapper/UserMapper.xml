@@ -20,4 +20,14 @@
         from s_user su join s_article sa on su.id = sa.user_id group by su.id order by count(sa.id) desc limit 3;
     </select>
 
+    <select id="selectAttentionUser" resultType="club.zhangliyuanblog.entity.User">
+        select su.* from s_user su join s_attention sa on su.id = sa.be_user_id where sa.user_id = #{id}
+    </select>
+    <select id="selectUsersBeAttention" resultType="club.zhangliyuanblog.entity.User">
+        select su.* from s_user su join s_attention sa on su.id = sa.user_id where sa.be_user_id = #{id}
+    </select>
+    <select id="selectIsAttention" resultType="club.zhangliyuanblog.entity.Attention">
+        select * from s_attention where be_user_id = #{beAttentionUserId} and user_id = #{currentUserId}
+    </select>
+
 </mapper>

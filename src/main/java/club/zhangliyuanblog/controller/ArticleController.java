@@ -36,12 +36,12 @@ public class ArticleController {
      */
     @ApiOperation("根据id查询文章，返回文章vo")
     @GetMapping("/{id}")
-    public Result getOne(@PathVariable(value = "id") Integer id) {
+    public Result getOne(@PathVariable(value = "id") Integer id,@RequestParam("currentUserId") Integer currentUserId) {
         Result result;
         try {
             result = Result.builder()
                     .code(200)
-                    .data(iArticleService.getOne(id))
+                    .data(iArticleService.getOne(id, currentUserId))
                     .message("查询成功")
                     .build();
         } catch (Exception e) {

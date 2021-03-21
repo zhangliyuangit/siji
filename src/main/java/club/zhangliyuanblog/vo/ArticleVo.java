@@ -34,4 +34,10 @@ public class ArticleVo {
 
     /** 评论内容*/
     private List<CommentVo> comments;
+
+    /** 当前用户是否给这篇文章点赞*/
+    private Boolean isLike;
+
+    /** 当前用户是否关注本文作者*/
+    private Boolean isAttention;
 }

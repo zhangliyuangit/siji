@@ -2,9 +2,11 @@ package club.zhangliyuanblog.service.impl;
 
 import club.zhangliyuanblog.entity.Article;
 import club.zhangliyuanblog.entity.Comment;
+import club.zhangliyuanblog.entity.Like;
 import club.zhangliyuanblog.entity.User;
 import club.zhangliyuanblog.mapper.ArticleMapper;
 import club.zhangliyuanblog.mapper.CommentMapper;
+import club.zhangliyuanblog.mapper.LikeMapper;
 import club.zhangliyuanblog.mapper.UserMapper;
 import club.zhangliyuanblog.service.IArticleService;
 import club.zhangliyuanblog.vo.ArticleVo;
@@ -18,10 +20,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * <p>
- *  服务实现类
- * </p>
- *
  * @author liyuan.zhang
  * @since 2021-03-11
  */
@@ -34,14 +32,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     private final CommentMapper commentMapper;
 
-    public ArticleServiceImpl(ArticleMapper articleMapper, UserMapper userMapper, CommentMapper commentMapper) {
+    private final LikeMapper likeMapper;
+
+    public ArticleServiceImpl(ArticleMapper articleMapper, UserMapper userMapper, CommentMapper commentMapper, LikeMapper likeMapper) {
         this.articleMapper = articleMapper;
         this.userMapper = userMapper;
         this.commentMapper = commentMapper;
+        this.likeMapper = likeMapper;
     }
 
     @Override
-    public ArticleVo getOne(Integer id) {
+    public ArticleVo getOne(Integer id, Integer currentUserId) {
         ArticleVo articleVo = articleMapper.selectArticleById(id);
         // 将文章的作者绑到对象上
         User user = userMapper.selectById(articleVo.getUser_id());
@@ -57,6 +58,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                     return commentVo;
                 }).collect(Collectors.toList());
         articleVo.setComments(commentVos);
+        // 是否关注该用户
+        articleVo.setIsAttention(userMapper.selectIsAttention(currentUserId, user.getId()) != null);
+        // 是否点赞
+        articleVo.setIsLike(likeMapper.selectOne(new QueryWrapper<Like>()
+                .eq("user_id", currentUserId)
+                .eq("article_id", id)) != null);
         return articleVo;
     }
 }

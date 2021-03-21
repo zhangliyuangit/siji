@@ -37,4 +37,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public List<User> selectUserByArticleRanking() {
         return userMapper.selectUserByArticleNums();
     }
+
+    @Override
+    public Boolean isAttention(Integer currentUserId, Integer beAttentionUserId) {
+        return userMapper.selectIsAttention(currentUserId, beAttentionUserId) != null;
+    }
 }
