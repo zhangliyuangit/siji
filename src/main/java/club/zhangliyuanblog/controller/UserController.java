@@ -3,6 +3,7 @@ package club.zhangliyuanblog.controller;
 
 import club.zhangliyuanblog.entity.Attention;
 import club.zhangliyuanblog.entity.User;
+import club.zhangliyuanblog.properties.SystemProperties;
 import club.zhangliyuanblog.service.IAttentionService;
 import club.zhangliyuanblog.service.IUserService;
 import club.zhangliyuanblog.util.JWTUtils;
@@ -18,6 +19,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,17 +39,20 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping("/user")
 @SessionAttributes("code")
+@EnableConfigurationProperties(SystemProperties.class)
 public class UserController {
 
     private final IUserService iUserService;
     private ObjectMapper objectMapper;
     private final RedisTemplate<String, String> redisTemplate;
     private final IAttentionService iAttentionService;
+    private final SystemProperties systemProperties;
 
-    public UserController(IUserService iUserService, RedisTemplate<String, String> redisTemplate, IAttentionService iAttentionService) {
+    public UserController(IUserService iUserService, RedisTemplate<String, String> redisTemplate, IAttentionService iAttentionService, SystemProperties systemProperties) {
         this.iUserService = iUserService;
         this.redisTemplate = redisTemplate;
         this.iAttentionService = iAttentionService;
+        this.systemProperties = systemProperties;
         this.objectMapper = new ObjectMapper();
     }
 
@@ -136,10 +141,15 @@ public class UserController {
         String phoneCode = String.valueOf((int) ((Math.random() * 9 + 1) * 1000));
         templateParams[0] = phoneCode;
         templateParams[1] = "5分钟";
-        log.info("验证码是{}", phoneCode);
         // 将code存入redis,并设置过期时间为5分钟
         redisTemplate.opsForValue().set(phone, phoneCode, 60 * 5, TimeUnit.SECONDS);
         params.put("templateParams", templateParams);
+
+        // 如果是debug模式，不发送验证码
+        if (systemProperties.isDebug()){
+            log.info("验证码是{}", phoneCode);
+            return "isDebug";
+        }
         // 发送验证码
         return client.send(params);
     }
