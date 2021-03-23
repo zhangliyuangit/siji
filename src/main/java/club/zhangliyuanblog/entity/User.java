@@ -9,8 +9,7 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 /**
  * <p>
@@ -21,9 +20,12 @@ import lombok.EqualsAndHashCode;
  * @since 2021-03-11
  */
 @Data
+@Builder
 @EqualsAndHashCode(callSuper = false)
 @TableName("s_user")
 @ApiModel(value="User对象", description="")
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -6,10 +6,14 @@ import club.zhangliyuanblog.entity.User;
 import club.zhangliyuanblog.service.IAttentionService;
 import club.zhangliyuanblog.service.IUserService;
 import club.zhangliyuanblog.util.JWTUtils;
+import club.zhangliyuanblog.util.ZhenziUtils;
 import club.zhangliyuanblog.vo.LoginUser;
 import club.zhangliyuanblog.vo.Result;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zhenzi.sms.ZhenziSmsClient;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +23,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author liyuan.zhang
@@ -46,13 +52,13 @@ public class UserController {
     }
 
     /**
-     * 登录
+     * 账号密码登录
      * @param loginUser 前端JSON对象
      * @return  统一返回结果集
      */
     @ApiOperation("登录接口")
     @PostMapping("/login")
-    public Result login(@RequestBody LoginUser loginUser, Model model) {
+    public Result passwordLogin(@RequestBody LoginUser loginUser, Model model) {
 
         // 校验验证码
         String code = redisTemplate.opsForValue().get("code");
@@ -81,6 +87,61 @@ public class UserController {
             e.printStackTrace();
         }
         return result;
+    }
+
+    /**
+     * 免密登录
+     * @param phone 手机号
+     * @param checkCode 验证码
+     * @return 统一返回结果集
+     */
+    @ApiOperation("免密登录")
+    @PostMapping("/phone")
+    public Result PhoneLoginOrRegister(String phone, String checkCode) throws JsonProcessingException {
+        String c = redisTemplate.opsForValue().get(phone);
+        if (!checkCode.equals(c)) {
+            return Result.builder().message("验证码错误或失效!!!").code(400).build();
+        }
+        // 有当前手机号的情况下
+        User user = iUserService.getOne(new QueryWrapper<User>().eq("phone", phone), false);
+        if (ObjectUtil.isNotEmpty(user)) {
+            Map map = objectMapper.readValue(objectMapper.writeValueAsString(user), HashMap.class);
+            return Result.builder().code(200).message("").data(JWTUtils.getToken(map)).build();
+        }
+        // 当前用户不存在,创建用户
+        User newUser = User.builder()
+                .name("用户" + System.currentTimeMillis())
+                .create_time(LocalDateTime.now())
+                .phone(phone)
+                .password(("siji_" + System.currentTimeMillis()).substring(0, 18))
+                .update_time(LocalDateTime.now())
+                .build();
+        iUserService.save(newUser);
+        Map map = objectMapper.readValue(objectMapper.writeValueAsString(newUser), HashMap.class);
+        return Result.builder().code(200).message("").data(JWTUtils.getToken(map)).build();
+    }
+
+    /**
+     * 获取验证码
+     * @throws Exception
+     */
+    @ApiOperation("获取收集验证码")
+    @GetMapping("/phoneCode")
+    public String getPhoneCode(String phone, HttpSession session) throws Exception {
+        ZhenziSmsClient client = new ZhenziSmsClient(ZhenziUtils.API_URL, ZhenziUtils.APP_ID ,ZhenziUtils.APP_SECRET);
+        Map<String, Object> params = new HashMap<>(16);
+        params.put("number", phone);
+        params.put("templateId", "2175");
+        String[] templateParams = new String[2];
+        String phoneCode = String.valueOf((int) ((Math.random() * 9 + 1) * 1000));
+        templateParams[0] = phoneCode;
+        templateParams[1] = "5分钟";
+        log.info("验证码是{}", phoneCode);
+        // 将code存入redis,并设置过期时间为5分钟
+        redisTemplate.opsForValue().set(phone, phoneCode, 60 * 5, TimeUnit.SECONDS);
+        params.put("templateParams", templateParams);
+        // 发送验证码
+        return client.send(params);
     }
 
     /**
@@ -150,4 +211,6 @@ public class UserController {
                 .eq("be_user_id", beAttentionUserId)
                 .eq("user_id", currentId));
     }
+
+
 }

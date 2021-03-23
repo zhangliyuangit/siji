@@ -62,6 +62,7 @@ public class ArticleController {
      * @param pageSize  每页显示条数
      * @return 统一返回结果集
      */
+    @ApiOperation("分页查询文章")
     @GetMapping("/page/{currentPage}/{pageSize}")
     public Result getArticleByPage(@PathVariable(value = "currentPage", required = false) Integer currentPage, @PathVariable(value = "pageSize", required = false) Integer pageSize) {
         // 非空处理
