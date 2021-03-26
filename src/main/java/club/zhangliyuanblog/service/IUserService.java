@@ -26,4 +26,11 @@ public interface IUserService extends IService<User> {
      * @return 是否关注
      */
     Boolean isAttention(Integer currentUserId, Integer beAttentionUserId);
+
+    /**
+     * 查询一个用户都关注了哪些用户
+     * @param id 当前用户id
+     * @return 被关注的用户id的集合
+     */
+    List<Integer> selectUserIdByAttention(Integer id);
 }

@@ -14,4 +14,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IArticleService extends IService<Article> {
     ArticleVo getOne(Integer id, Integer currentUserId);
+
+    /**
+     * 保存文章，并且保存类型
+     * @param articleVo
+     */
+    void saveArticleAndTypes(ArticleVo articleVo);
 }

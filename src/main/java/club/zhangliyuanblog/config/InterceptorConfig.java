@@ -43,12 +43,13 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 "/index.html",
                 "/*.pdf",
                 "/static/**",
-                "/**/*.css",
-                "/**/*.js",
+                "/*/*.css",
+                "/*/*.js",
 
                 // TODO 要放行的路径
                 "/user/**",
-                "/article/**"};
+                "/captcha/**"
+                };
         registry.addInterceptor(new JWTInterceptor())
                 // ToDo 配置拦截路径
                 .addPathPatterns("/**")

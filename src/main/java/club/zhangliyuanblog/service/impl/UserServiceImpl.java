@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author liyuan.zhang
@@ -37,5 +38,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public Boolean isAttention(Integer currentUserId, Integer beAttentionUserId) {
         return userMapper.selectIsAttention(currentUserId, beAttentionUserId) != null;
+    }
+
+    @Override
+    public List<Integer> selectUserIdByAttention(Integer id) {
+        return userMapper.selectAttentionUser(id)
+                .stream()
+                .map(User::getId)
+                .collect(Collectors.toList());
     }
 }

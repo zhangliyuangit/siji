@@ -40,4 +40,6 @@ public class ArticleVo {
 
     /** 当前用户是否关注本文作者*/
     private Boolean isAttention;
+
+    private String overview;
 }

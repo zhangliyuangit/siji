@@ -1,13 +1,7 @@
 package club.zhangliyuanblog.service.impl;
 
-import club.zhangliyuanblog.entity.Article;
-import club.zhangliyuanblog.entity.Comment;
-import club.zhangliyuanblog.entity.Like;
-import club.zhangliyuanblog.entity.User;
-import club.zhangliyuanblog.mapper.ArticleMapper;
-import club.zhangliyuanblog.mapper.CommentMapper;
-import club.zhangliyuanblog.mapper.LikeMapper;
-import club.zhangliyuanblog.mapper.UserMapper;
+import club.zhangliyuanblog.entity.*;
+import club.zhangliyuanblog.mapper.*;
 import club.zhangliyuanblog.service.IArticleService;
 import club.zhangliyuanblog.vo.ArticleVo;
 import club.zhangliyuanblog.vo.CommentVo;
@@ -15,8 +9,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -24,6 +21,7 @@ import java.util.stream.Collectors;
  * @since 2021-03-11
  */
 @Service
+@Transactional(rollbackFor = RuntimeException.class)
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements IArticleService {
 
     private final ArticleMapper articleMapper;
@@ -34,11 +32,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     private final LikeMapper likeMapper;
 
-    public ArticleServiceImpl(ArticleMapper articleMapper, UserMapper userMapper, CommentMapper commentMapper, LikeMapper likeMapper) {
+    private final TypeMapper typeMapper;
+
+    private final ArticleTypeMapper articleTypeMapper;
+
+    public ArticleServiceImpl(ArticleMapper articleMapper, UserMapper userMapper, CommentMapper commentMapper, LikeMapper likeMapper, TypeMapper typeMapper, ArticleTypeMapper articleTypeMapper) {
         this.articleMapper = articleMapper;
         this.userMapper = userMapper;
         this.commentMapper = commentMapper;
         this.likeMapper = likeMapper;
+        this.typeMapper = typeMapper;
+        this.articleTypeMapper = articleTypeMapper;
     }
 
     @Override
@@ -65,5 +69,46 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 .eq("user_id", currentUserId)
                 .eq("article_id", id)) != null);
         return articleVo;
+    }
+
+    @Override
+    public void saveArticleAndTypes(ArticleVo articleVo) {
+        Article article = new Article();
+        BeanUtils.copyProperties(articleVo, article);
+        article.setCreate_time(LocalDateTime.now());
+        articleMapper.insert(article);
+
+        Map<Integer, String> allTypes = typeMapper.selectList(null).stream()
+                .collect(Collectors.toMap(Type::getId, Type::getName));
+
+        // 保存文章类型
+        articleVo.getTypes()
+                .forEach(type -> {
+                    // 证明这个type是本身就存在的
+                    if (allTypes.containsValue(type)) {
+                        articleTypeMapper.insert(new ArticleType(null, article.getId(), selectKeyByValue(allTypes, type)));
+                    }else {
+                        // 创建一个新的type
+                        Type newType = Type.builder().create_time(LocalDateTime.now()).name(type).build();
+                        typeMapper.insert(newType);
+                        articleTypeMapper.insert(new ArticleType(null, article.getId(), newType.getId()));
+                    }
+                });
+    }
+
+
+    /**
+     * 根据value查找key
+     * @param map map
+     * @param value value
+     * @return key
+     */
+    private Integer selectKeyByValue(Map<Integer, String> map, String value) {
+        for (Integer key : map.keySet()) {
+            if (map.get(key).equals(value)) {
+                return key;
+            }
+        }
+        return null;
     }
 }
