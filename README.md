@@ -25,5 +25,3 @@
 ![](./doc/siji-3.png)
 
 如果你觉得这个项目对你有帮助，请帮忙点一个Star
-#### 新版后端地址
-[点击这里奥](https://gitee.com/zhangliyuanblog/siji-v2)
