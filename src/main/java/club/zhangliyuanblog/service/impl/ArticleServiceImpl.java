@@ -76,6 +76,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Article article = new Article();
         BeanUtils.copyProperties(articleVo, article);
         article.setCreate_time(LocalDateTime.now());
+        // 这里因为前端传过来的是一个空串
+        if ("".equals(article.getThematic())) {
+            article.setThematic(null);
+        }
         articleMapper.insert(article);
 
         Map<Integer, String> allTypes = typeMapper.selectList(null).stream()
