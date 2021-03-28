@@ -169,12 +169,12 @@ public class UserController {
     }
 
     @ApiOperation("根据id查询用户")
-    @GetMapping("/{id}")
-    public Result selectUserDetails(@PathVariable(value = "id") Integer id) {
+    @GetMapping("/{id}/{currentUserId}")
+    public Result selectUserDetails(@PathVariable(value = "id") Integer id, @PathVariable Integer currentUserId) {
         return Result.builder()
                 .message("查询成功")
                 .code(200)
-                .data(iUserService.getById(id))
+                .data(iUserService.selectUserInfo(currentUserId, id))
                 .build();
     }
 

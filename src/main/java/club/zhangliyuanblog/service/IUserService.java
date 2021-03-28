@@ -1,6 +1,7 @@
 package club.zhangliyuanblog.service;
 
 import club.zhangliyuanblog.entity.User;
+import club.zhangliyuanblog.vo.UserVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.swagger.models.auth.In;
 
@@ -33,4 +34,7 @@ public interface IUserService extends IService<User> {
      * @return 被关注的用户id的集合
      */
     List<Integer> selectUserIdByAttention(Integer id);
+
+    /** 查询用户信息*/
+    UserVo selectUserInfo(Integer currentUserId, Integer userId);
 }
