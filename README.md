@@ -5,6 +5,7 @@
 - SpringBoot 2.4.0
 - MySQL 8.0
 - Mybatis-Plus 3.4.0
+- Druid连接池
 - Redis
 - 榛子云短信验证平台
 - hutool和其他一些东西就不过多的赘述了
