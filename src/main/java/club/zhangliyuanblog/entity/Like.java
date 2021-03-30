@@ -6,8 +6,10 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -21,6 +23,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @TableName("s_like")
 @ApiModel(value="Like对象", description="")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Like implements Serializable {
 
     private static final long serialVersionUID = 1L;
