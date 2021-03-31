@@ -36,7 +36,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         comment.setCreate_time(LocalDateTime.now());
         commentMapper.insert(comment);
         final List<CommentVo> commentVos = commentMapper
-                .selectList(new QueryWrapper<Comment>().eq("article_id", comment.getArticle_id()))
+                .selectList(new QueryWrapper<Comment>().eq("article_id", comment.getArticle_id()).orderByDesc("create_time"))
                 .stream().map(comment1 -> {
                     CommentVo commentVo = new CommentVo();
                     BeanUtils.copyProperties(comment1, commentVo);

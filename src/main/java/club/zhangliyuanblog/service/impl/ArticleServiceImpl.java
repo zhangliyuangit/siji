@@ -53,7 +53,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         articleVo.setUser(user);
 
         // 将文章所有的评论和对应评论的用户绑定
-        List<Comment> comments = commentMapper.selectList(new QueryWrapper<Comment>().eq("article_id", articleVo.getId()));
+        List<Comment> comments = commentMapper.selectList(new QueryWrapper<Comment>().eq("article_id", articleVo.getId()).orderByDesc("create_time"));
         List<CommentVo> commentVos = comments.stream()
                 .map(comment -> {
                     CommentVo commentVo = new CommentVo();
@@ -68,6 +68,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         articleVo.setIsLike(likeMapper.selectOne(new QueryWrapper<Like>()
                 .eq("user_id", currentUserId)
                 .eq("article_id", id)) != null);
+        // 点赞数
+        articleVo.setLikeNum(likeMapper.likeNum(id));
         return articleVo;
     }
 

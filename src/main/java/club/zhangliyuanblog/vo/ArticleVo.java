@@ -42,4 +42,7 @@ public class ArticleVo {
     private Boolean isAttention;
 
     private String overview;
+
+    /** 点赞数量*/
+    private Integer likeNum;
 }

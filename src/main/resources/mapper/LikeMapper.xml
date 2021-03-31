@@ -13,5 +13,8 @@
     <sql id="Base_Column_List">
         id, user_id, article_id
     </sql>
+    <select id="likeNum" resultType="java.lang.Integer">
+        select count(*) from s_like where article_id = #{articleId}
+    </select>
 
 </mapper>
