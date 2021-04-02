@@ -37,9 +37,9 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
     }
 
     @Override
-    public List<Collection> addAndGet(Collection collection) {
+    public List<CollectionVo> addAndGet(Collection collection, Integer articleId) {
         collectionMapper.insert(collection);
-        return collectionMapper.selectList(new QueryWrapper<Collection>().eq("user_id", collection.getUser_id()));
+        return getCollectionsByUserId(collection.getUser_id(), articleId);
     }
 
     @Override

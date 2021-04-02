@@ -14,9 +14,10 @@ public interface ICollectionService extends IService<Collection> {
     /**
      * 创建collection并返回当前用户所有collection
      * @param collection collection
+     * @param articleId 当前文章id
      * @return  所有collection
      */
-    List<Collection> addAndGet(Collection collection);
+    List<CollectionVo> addAndGet(Collection collection, Integer articleId);
 
     /**
      * 根据用户id查询所有收藏夹
