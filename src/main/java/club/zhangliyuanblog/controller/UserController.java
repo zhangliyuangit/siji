@@ -243,6 +243,7 @@ public class UserController {
             User user = User.builder()
                     .id(currentUserId)
                     .header_pic(serverConfig.getUrl() + fileName)
+                    .update_time(LocalDateTime.now())
                     .build();
             iUserService.updateById(user);
             User userDb = iUserService.getById(currentUserId);
@@ -254,5 +255,31 @@ public class UserController {
             return Result.builder().code(400).message("修改失败").build();
         }
     }
+
+    @ApiOperation("更新用户信息")
+    @PostMapping("/updateUserInfo")
+    public Result updateUserInfo(@RequestBody User user) throws JsonProcessingException {
+        user.setUpdate_time(LocalDateTime.now());
+        iUserService.updateById(user);
+        User userDb = iUserService.getById(user.getId());
+        userDb.setPassword("");
+        Map map = objectMapper.readValue(objectMapper.writeValueAsString(userDb), HashMap.class);
+        return Result.builder().code(200).data(JWTUtils.getToken(map)).build();
+    }
+    @ApiOperation("更新密码操作")
+    @PostMapping("/updateUserPassword/{currentUserId}")
+    public Result updateUserPassWord(@RequestBody LoginUser user, @PathVariable Integer currentUserId) {
+        String c = redisTemplate.opsForValue().get(user.getPhone());
+        if (!user.getCaptchaCode().equals(c)) {
+            return Result.builder().message("验证码错误或失效!!!").code(400).build();
+        }
+        User u = new User();
+        BeanUtils.copyProperties(user, u);
+        u.setUpdate_time(LocalDateTime.now());
+        u.setId(currentUserId);
+        iUserService.updateById(u);
+        return Result.builder().code(200).build();
+    }
+
 }
 
