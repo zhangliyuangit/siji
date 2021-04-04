@@ -7,6 +7,7 @@
 - Mybatis-Plus 3.4.0
 - Druid连接池
 - Redis
+- Swagger2.0
 - 榛子云短信验证平台
 - hutool和其他一些东西就不过多的赘述了
 - 后续应该会整合RabbitMQ做一些消息推送

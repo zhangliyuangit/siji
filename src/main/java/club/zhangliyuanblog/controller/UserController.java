@@ -1,6 +1,7 @@
 package club.zhangliyuanblog.controller;
 
 
+import club.zhangliyuanblog.config.ServerConfig;
 import club.zhangliyuanblog.entity.Attention;
 import club.zhangliyuanblog.entity.User;
 import club.zhangliyuanblog.properties.SystemProperties;
@@ -23,8 +24,11 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,12 +51,14 @@ public class UserController {
     private final RedisTemplate<String, String> redisTemplate;
     private final IAttentionService iAttentionService;
     private final SystemProperties systemProperties;
+    private final ServerConfig serverConfig;
 
-    public UserController(IUserService iUserService, RedisTemplate<String, String> redisTemplate, IAttentionService iAttentionService, SystemProperties systemProperties) {
+    public UserController(IUserService iUserService, RedisTemplate<String, String> redisTemplate, IAttentionService iAttentionService, SystemProperties systemProperties, ServerConfig serverConfig) {
         this.iUserService = iUserService;
         this.redisTemplate = redisTemplate;
         this.iAttentionService = iAttentionService;
         this.systemProperties = systemProperties;
+        this.serverConfig = serverConfig;
         this.objectMapper = new ObjectMapper();
     }
 
@@ -223,4 +229,30 @@ public class UserController {
     }
 
 
+    @ApiOperation("更新头像")
+    @PostMapping("/updateHeaderImg/{currentUserId}")
+    public Result updateUserHeaderImg(@RequestParam MultipartFile file, @PathVariable Integer currentUserId) {
+        log.info("调用地址为{}", serverConfig.getUrl());
+        log.info("用户id为{}", currentUserId);
+        try {
+            String fileName = System.currentTimeMillis() + ".jpg";
+            String path = systemProperties.getImgPath() + File.separator + fileName;
+            // 保存文件
+            file.transferTo(new File(path));
+            // 更新用户头像
+            User user = User.builder()
+                    .id(currentUserId)
+                    .header_pic(serverConfig.getUrl() + fileName)
+                    .build();
+            iUserService.updateById(user);
+            User userDb = iUserService.getById(currentUserId);
+            userDb.setPassword("");
+            Map map = objectMapper.readValue(objectMapper.writeValueAsString(userDb), HashMap.class);
+            return Result.builder().code(200).data(JWTUtils.getToken(map)).build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Result.builder().code(400).message("修改失败").build();
+        }
+    }
 }
+

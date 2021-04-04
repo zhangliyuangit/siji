@@ -15,4 +15,6 @@ public class SystemProperties {
     private boolean debug;
 
     private String secret;
+
+    private String imgPath;
 }
