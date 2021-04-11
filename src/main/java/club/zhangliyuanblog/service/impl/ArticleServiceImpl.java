@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * @since 2021-03-11
  */
 @Service
-@Transactional(rollbackFor = RuntimeException.class)
+@Transactional(rollbackFor = Exception.class)
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements IArticleService {
 
     private final ArticleMapper articleMapper;
@@ -84,6 +84,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
         articleMapper.insert(article);
 
+        // 拿到现有的所以类型，id作为key，name作为value
         Map<Integer, String> allTypes = typeMapper.selectList(null).stream()
                 .collect(Collectors.toMap(Type::getId, Type::getName));
 

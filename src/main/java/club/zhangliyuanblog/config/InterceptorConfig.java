@@ -45,7 +45,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 "/static/**",
                 "/*/*.css",
                 "/*/*.js",
-
+                "/*.jpg",
                 // TODO 要放行的路径
                 "/user/**",
                 "/captcha/**"
