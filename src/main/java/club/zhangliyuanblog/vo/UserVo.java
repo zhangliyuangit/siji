@@ -32,6 +32,12 @@ public class UserVo {
 
     private String header_pic;
 
+    private String position;
+
+    private String company;
+
+    private String home_page;
+
     /** 当前登录的用户，是否关注该用户*/
     private Boolean isAttention;
 }

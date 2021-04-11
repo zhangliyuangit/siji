@@ -12,10 +12,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 /**
- * <p>
- * 
- * </p>
- *
  * @author liyuan.zhang
  * @since 2021-03-11
  */
@@ -59,6 +55,15 @@ public class User implements Serializable {
 
     @ApiModelProperty(value = "头像地址")
     private String header_pic;
+
+    @ApiModelProperty(value = "职位")
+    private String position;
+
+    @ApiModelProperty(value = "公司")
+    private String company;
+
+    @ApiModelProperty(value = "个人主页")
+    private String home_page;
 
 
 }
