@@ -109,12 +109,25 @@ public class ArticleController {
 
     @ApiOperation("保存文章")
     @PostMapping("/save")
-    public Result saveArtice(@RequestBody ArticleVo articleVo) {
+    public Result saveArticle(@RequestBody ArticleVo articleVo) {
         try {
-            iArticleService.saveArticleAndTypes(articleVo);
-            return Result.builder().code(200).message("保存成功").build();
+            final Integer articleId = iArticleService.saveArticleAndTypes(articleVo);
+            return Result.builder().code(200).message("保存成功").data(articleId).build();
         } catch (Exception e) {
             return Result.builder().code(400).message("保存失败").build();
+        }
+    }
+
+    @ApiOperation("删除文章")
+    @DeleteMapping("/deleteArticle/{articleId}")
+    public Result deleteArticle(@PathVariable Integer articleId) {
+        // 删除文章以及文章类型
+        try {
+            iArticleService.deleteArticle(articleId);
+            return Result.builder().code(200).message("删除成功").build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.builder().code(400).message("删除失败").build();
         }
     }
 

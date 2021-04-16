@@ -7,11 +7,7 @@ import club.zhangliyuanblog.vo.CommentVo;
 import club.zhangliyuanblog.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,5 +31,18 @@ public class CommentController {
     public Result addComment(@RequestBody Comment comment) {
         List<CommentVo> comments = commentService.addAndGet(comment);
         return Result.builder().data(comments).code(200).message("添加成功").build();
+    }
+
+    @ApiOperation("删除评论")
+    @DeleteMapping("/deleteComment/{commentId}/{articleId}")
+    public Result deleteComment(@PathVariable Integer commentId, @PathVariable Integer articleId) {
+        try {
+            commentService.removeById(commentId);
+            List<CommentVo> commentVos = commentService.getCommentsByArticleId(articleId);
+            return Result.builder().code(200).message("删除成功").data(commentVos).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.builder().code(400).message("删除失败").build();
+        }
     }
 }

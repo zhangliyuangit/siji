@@ -3,6 +3,7 @@ package club.zhangliyuanblog.service;
 import club.zhangliyuanblog.entity.Comment;
 import club.zhangliyuanblog.vo.CommentVo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import io.swagger.models.auth.In;
 
 import java.util.List;
 
@@ -17,4 +18,11 @@ public interface ICommentService extends IService<Comment> {
      * @return  评论列表
      */
     List<CommentVo> addAndGet(Comment comment);
+
+    /**
+     * 根据文章id查询commentVos
+     * @param articleId 文章id
+     * @return commentVo集合
+     */
+    List<CommentVo> getCommentsByArticleId(Integer articleId);
 }

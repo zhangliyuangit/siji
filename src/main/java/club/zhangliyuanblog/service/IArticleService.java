@@ -19,5 +19,11 @@ public interface IArticleService extends IService<Article> {
      * 保存文章，并且保存类型
      * @param articleVo
      */
-    void saveArticleAndTypes(ArticleVo articleVo);
+    Integer saveArticleAndTypes(ArticleVo articleVo);
+
+    /**
+     * 删除文章和文章对应的类型
+     * @param articleId 文章id
+     */
+    void deleteArticle(Integer articleId);
 }

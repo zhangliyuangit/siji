@@ -45,4 +45,17 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
                 }).collect(Collectors.toList());
         return commentVos;
     }
+
+    @Override
+    public List<CommentVo> getCommentsByArticleId(Integer articleId) {
+        List<Comment> comments = commentMapper.selectList(new QueryWrapper<Comment>().eq("article_id", articleId).orderByDesc("create_time"));
+        List<CommentVo> commentVos = comments.stream()
+                .map(comment -> {
+                    CommentVo commentVo = new CommentVo();
+                    BeanUtils.copyProperties(comment, commentVo);
+                    commentVo.setUser(userMapper.selectById(comment.getUser_id()));
+                    return commentVo;
+                }).collect(Collectors.toList());
+        return commentVos;
+    }
 }

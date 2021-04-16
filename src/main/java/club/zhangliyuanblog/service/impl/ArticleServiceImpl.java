@@ -7,6 +7,7 @@ import club.zhangliyuanblog.vo.ArticleVo;
 import club.zhangliyuanblog.vo.CommentVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
  * @author liyuan.zhang
  * @since 2021-03-11
  */
+@Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements IArticleService {
@@ -74,7 +76,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public void saveArticleAndTypes(ArticleVo articleVo) {
+    public Integer saveArticleAndTypes(ArticleVo articleVo) {
         Article article = new Article();
         BeanUtils.copyProperties(articleVo, article);
         article.setCreate_time(LocalDateTime.now());
@@ -101,6 +103,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                         articleTypeMapper.insert(new ArticleType(null, article.getId(), newType.getId()));
                     }
                 });
+        // 这里自增id
+        return article.getId();
+    }
+
+    @Override
+    public void deleteArticle(Integer articleId) {
+        // 删除文章
+        articleMapper.deleteById(articleId);
+        // 删除文章类型
+        articleTypeMapper.delete(new QueryWrapper<ArticleType>()
+                .eq("article_id", articleId));
     }
 
 
