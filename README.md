@@ -25,6 +25,7 @@
 ![](./doc/siji-1.png)
 ![](./doc/siji-2.png)
 ![](./doc/siji-3.png)
+![](./doc/siji-7.png)
 ![](./doc/siji-4.png)
 ![](./doc/siji-5.png)
 ![](./doc/siji-6.png)
