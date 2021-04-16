@@ -21,4 +21,9 @@ class ArticleMapperTest {
     void selectArticleById() {
         System.out.println(articleMapper.selectArticleById(1));
     }
+
+    @Test
+    void selectArticleByType() {
+        articleMapper.selectArticleByType("java").forEach(System.out::println);
+    }
 }

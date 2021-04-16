@@ -17,4 +17,9 @@
         from s_article
         where id = #{id}
     </select>
+    <select id="selectArticleByType" resultType="club.zhangliyuanblog.entity.Article">
+        select sa.id, sa.title, sa.thematic, sa.overview
+        from s_article sa join s_article_type sat on sa.id = sat.article_id
+            join s_type st on sat.type_id = st.id where st.name = #{type} order by sa.create_time desc
+    </select>
 </mapper>

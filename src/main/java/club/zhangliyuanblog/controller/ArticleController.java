@@ -131,4 +131,10 @@ public class ArticleController {
         }
     }
 
+
+    @ApiOperation("根据文章类型查找文章")
+    @GetMapping("/findArticleByType/{type}")
+    public Result findArticleByType(@PathVariable String type) {
+        return Result.builder().data(iArticleService.selectArticleByType(type)).code(200).build();
+    }
 }

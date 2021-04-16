@@ -4,6 +4,8 @@ import club.zhangliyuanblog.entity.Article;
 import club.zhangliyuanblog.vo.ArticleVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -26,4 +28,11 @@ public interface IArticleService extends IService<Article> {
      * @param articleId 文章id
      */
     void deleteArticle(Integer articleId);
+
+    /**
+     * 根据类型查询文章集合
+     * @param type 类型
+     * @return  文章集合
+     */
+    List<Article> selectArticleByType(String type);
 }

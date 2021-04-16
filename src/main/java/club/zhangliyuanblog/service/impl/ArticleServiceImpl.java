@@ -116,6 +116,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 .eq("article_id", articleId));
     }
 
+    @Override
+    public List<Article> selectArticleByType(String type) {
+        return articleMapper.selectArticleByType(type);
+    }
+
 
     /**
      * 根据value查找key

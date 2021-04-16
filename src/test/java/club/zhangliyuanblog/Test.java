@@ -1,6 +1,9 @@
 package club.zhangliyuanblog;
 
 import java.util.*;
+import org.springframework.util.DigestUtils;
+
+
 
 /**
  * @author liyuan.zhang
@@ -44,4 +47,13 @@ public class Test {
         }
         System.out.println(builder.toString());
     }
+
+    @org.junit.jupiter.api.Test
+    public void test3() {
+        String passwordMd5 = DigestUtils.md5DigestAsHex("aaaa".getBytes());
+        String passwordMd1 = DigestUtils.md5DigestAsHex("aaaa".getBytes());
+        System.out.println(passwordMd5.equals(passwordMd1));
+    }
+
+
 }
