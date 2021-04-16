@@ -23,11 +23,13 @@
 本来考虑的是没登陆也可以查看文章的，做到一半发现前端好像有点完不成，只能换一个方案了。
 >先放几张图吧
 ![](./doc/siji-1.png)
+![](./doc/siji-9.png)
 ![](./doc/siji-2.png)
 ![](./doc/siji-3.png)
 ![](./doc/siji-7.png)
 ![](./doc/siji-4.png)
 ![](./doc/siji-5.png)
 ![](./doc/siji-6.png)
+![](./doc/siji-8.png)
 
 如果你觉得这个项目对你有帮助，请帮忙点一个Star
