@@ -22,4 +22,8 @@
         from s_article sa join s_article_type sat on sa.id = sat.article_id
             join s_type st on sat.type_id = st.id where st.name = #{type} order by sa.create_time desc
     </select>
+    <select id="selectArticleByUserId" resultType="club.zhangliyuanblog.entity.Article">
+        select id,title,create_time
+        from s_article where user_id = #{userId} order by create_time desc;
+    </select>
 </mapper>

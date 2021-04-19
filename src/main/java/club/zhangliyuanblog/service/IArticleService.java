@@ -35,4 +35,11 @@ public interface IArticleService extends IService<Article> {
      * @return  文章集合
      */
     List<Article> selectArticleByType(String type);
+
+    /**
+     * 根据用户id查询文章
+     * @param userId 用户id
+     * @return 文章集合
+     */
+    List<ArticleVo> selectArticleByUserId(Integer userId);
 }

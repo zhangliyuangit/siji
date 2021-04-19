@@ -137,4 +137,9 @@ public class ArticleController {
     public Result findArticleByType(@PathVariable String type) {
         return Result.builder().data(iArticleService.selectArticleByType(type)).code(200).build();
     }
+    @ApiOperation("根据用户id查询文章")
+    @GetMapping("/findArticleByUserId/{userId}")
+    public Result findArticlesByUserId(@PathVariable Integer userId) {
+        return Result.builder().code(200).data(iArticleService.selectArticleByUserId(userId)).build();
+    }
 }

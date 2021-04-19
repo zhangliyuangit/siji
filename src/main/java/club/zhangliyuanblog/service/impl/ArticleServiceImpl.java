@@ -121,6 +121,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return articleMapper.selectArticleByType(type);
     }
 
+    @Override
+    public List<ArticleVo> selectArticleByUserId(Integer userId) {
+        List<ArticleVo> articleVoList = articleMapper.selectArticleByUserId(userId).stream().map(article -> {
+            ArticleVo articleVo = new ArticleVo();
+            BeanUtils.copyProperties(article, articleVo);
+            articleVo.setTypes(typeMapper.selectTypesByArticleId(article.getId()));
+            return articleVo;
+        }).collect(Collectors.toList());
+        return articleVoList;
+    }
+
 
     /**
      * 根据value查找key

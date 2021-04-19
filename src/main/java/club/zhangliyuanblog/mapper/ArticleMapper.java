@@ -14,4 +14,6 @@ public interface ArticleMapper extends BaseMapper<Article> {
     ArticleVo selectArticleById(Integer id);
 
     List<Article> selectArticleByType(String type);
+
+    List<Article> selectArticleByUserId(Integer userId);
 }
