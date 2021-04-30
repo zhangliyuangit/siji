@@ -12,9 +12,15 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "system")
 public class SystemProperties {
+    /** 是否是debug模式*/
     private boolean debug;
 
+    /** JWT密钥*/
     private String secret;
 
+    /** 本地服务器图片路径*/
     private String imgPath;
+
+    /** 本地服务器文件路径*/
+    private String targetPath;
 }

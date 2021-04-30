@@ -48,7 +48,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 "/*.jpg",
                 // TODO 要放行的路径
                 "/user/**",
-                "/captcha/**"
+                "/captcha/**",
+                // 放行文件上传接口
+                "/file/uploadFile"
                 };
         registry.addInterceptor(new JWTInterceptor())
                 // ToDo 配置拦截路径
