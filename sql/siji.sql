@@ -11,7 +11,7 @@
  Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 29/03/2021 20:11:10
+ Date: 30/04/2021 11:06:00
 */
 
 SET NAMES utf8mb4;
@@ -27,7 +27,7 @@ CREATE TABLE `s_answer`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `context` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '评论内容',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of s_answer
@@ -46,7 +46,7 @@ CREATE TABLE `s_article`  (
   `user_id` int(0) NOT NULL COMMENT '用户id',
   `overview` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '概述',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of s_article
@@ -72,7 +72,7 @@ CREATE TABLE `s_article_type`  (
   `article_id` int(0) NOT NULL COMMENT '文章id',
   `type_id` int(0) NOT NULL COMMENT '文章类型id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 42 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of s_article_type
@@ -98,7 +98,7 @@ CREATE TABLE `s_attention`  (
   `be_user_id` int(0) NOT NULL COMMENT '被关注者id',
   `user_id` int(0) NOT NULL COMMENT '关注着id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 65 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 151 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of s_attention
@@ -109,8 +109,8 @@ INSERT INTO `s_attention` VALUES (4, 2, 3);
 INSERT INTO `s_attention` VALUES (33, 4, 2);
 INSERT INTO `s_attention` VALUES (34, 4, 2);
 INSERT INTO `s_attention` VALUES (50, 2, 5);
-INSERT INTO `s_attention` VALUES (62, 2, 2);
-INSERT INTO `s_attention` VALUES (64, 1, 2);
+INSERT INTO `s_attention` VALUES (149, 1, 2);
+INSERT INTO `s_attention` VALUES (151, 1, 5);
 
 -- ----------------------------
 -- Table structure for s_collection
@@ -122,11 +122,23 @@ CREATE TABLE `s_collection`  (
   `user_id` int(0) NOT NULL COMMENT '用户id',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '收藏夹名臣',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of s_collection
 -- ----------------------------
+INSERT INTO `s_collection` VALUES (1, '2021-03-31 21:34:08', 2, 'java学习');
+INSERT INTO `s_collection` VALUES (2, '2021-03-31 21:34:51', 2, 'demo');
+INSERT INTO `s_collection` VALUES (3, '2021-04-02 11:46:51', 2, 'test');
+INSERT INTO `s_collection` VALUES (4, '2021-04-02 11:55:12', 2, '测试');
+INSERT INTO `s_collection` VALUES (5, '2021-04-02 11:55:19', 2, '测试1');
+INSERT INTO `s_collection` VALUES (6, '2021-04-02 11:56:58', 2, '测试2');
+INSERT INTO `s_collection` VALUES (7, '2021-04-02 11:57:10', 2, '测试3');
+INSERT INTO `s_collection` VALUES (8, '2021-04-02 11:58:08', 2, '测试5');
+INSERT INTO `s_collection` VALUES (9, '2021-04-02 14:37:34', 1, '测试6');
+INSERT INTO `s_collection` VALUES (10, '2021-04-04 11:20:24', 2, '测试6');
+INSERT INTO `s_collection` VALUES (11, '2021-04-29 10:10:00', 5, 'java学习');
+INSERT INTO `s_collection` VALUES (12, '2021-04-29 10:10:07', 5, 'test1');
 
 -- ----------------------------
 -- Table structure for s_collection_content
@@ -137,11 +149,35 @@ CREATE TABLE `s_collection_content`  (
   `collection_id` int(0) NOT NULL COMMENT '收藏夹id',
   `article_id` int(0) NOT NULL COMMENT '文章id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 123 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of s_collection_content
 -- ----------------------------
+INSERT INTO `s_collection_content` VALUES (63, 8, 1);
+INSERT INTO `s_collection_content` VALUES (64, 7, 1);
+INSERT INTO `s_collection_content` VALUES (65, 1, 1);
+INSERT INTO `s_collection_content` VALUES (72, 1, 3);
+INSERT INTO `s_collection_content` VALUES (73, 2, 3);
+INSERT INTO `s_collection_content` VALUES (74, 4, 3);
+INSERT INTO `s_collection_content` VALUES (86, 2, 10);
+INSERT INTO `s_collection_content` VALUES (89, 2, 1);
+INSERT INTO `s_collection_content` VALUES (91, 4, 1);
+INSERT INTO `s_collection_content` VALUES (105, 2, 6);
+INSERT INTO `s_collection_content` VALUES (106, 1, 6);
+INSERT INTO `s_collection_content` VALUES (107, 10, 6);
+INSERT INTO `s_collection_content` VALUES (108, 8, 6);
+INSERT INTO `s_collection_content` VALUES (109, 7, 6);
+INSERT INTO `s_collection_content` VALUES (110, 5, 6);
+INSERT INTO `s_collection_content` VALUES (111, 4, 6);
+INSERT INTO `s_collection_content` VALUES (112, 3, 6);
+INSERT INTO `s_collection_content` VALUES (113, 6, 6);
+INSERT INTO `s_collection_content` VALUES (114, 10, 4);
+INSERT INTO `s_collection_content` VALUES (118, 6, 3);
+INSERT INTO `s_collection_content` VALUES (121, 12, 3);
+INSERT INTO `s_collection_content` VALUES (122, 11, 3);
+INSERT INTO `s_collection_content` VALUES (127, 7, 9);
+INSERT INTO `s_collection_content` VALUES (130, 3, 9);
 
 -- ----------------------------
 -- Table structure for s_comment
@@ -154,14 +190,42 @@ CREATE TABLE `s_comment`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `context` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '评论内容',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of s_comment
 -- ----------------------------
-INSERT INTO `s_comment` VALUES (1, 2, 1, '2021-03-20 09:41:38', '写的很好');
 INSERT INTO `s_comment` VALUES (2, 3, 1, '2021-03-20 09:41:58', '学到了');
 INSERT INTO `s_comment` VALUES (3, 4, 1, '2021-03-20 09:42:17', '麻烦加一个联系方式');
+INSERT INTO `s_comment` VALUES (11, 2, 1, '2021-03-31 15:06:02', 'demo');
+INSERT INTO `s_comment` VALUES (12, 2, 1, '2021-03-31 15:06:41', 'test');
+INSERT INTO `s_comment` VALUES (13, 2, 2, '2021-03-31 17:32:43', '测试');
+INSERT INTO `s_comment` VALUES (14, 2, 3, '2021-03-31 20:32:08', 'demo');
+
+-- ----------------------------
+-- Table structure for s_file
+-- ----------------------------
+DROP TABLE IF EXISTS `s_file`;
+CREATE TABLE `s_file`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '名称',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `user_id` int(0) NOT NULL COMMENT '用户id',
+  `file_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '真实文件名称',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of s_file
+-- ----------------------------
+INSERT INTO `s_file` VALUES (1, 'demo', '2021-04-29 14:59:07', 5, '1619679541508.pdf');
+INSERT INTO `s_file` VALUES (2, '笔记', '2021-04-29 15:03:21', 5, '1619679794113.md');
+INSERT INTO `s_file` VALUES (3, 'pdf测试', '2021-04-29 20:58:36', 5, '1619701096288.pdf');
+INSERT INTO `s_file` VALUES (4, 'word测试', '2021-04-29 22:10:19', 5, '1619705411946.doc');
+INSERT INTO `s_file` VALUES (5, 'png测试', '2021-04-29 22:10:41', 5, '1619705433936.png');
+INSERT INTO `s_file` VALUES (6, 'txt测试', '2021-04-29 22:11:07', 5, '1619705460273.txt');
+INSERT INTO `s_file` VALUES (7, 'java笔记', '2021-04-29 22:32:03', 2, '1619706710831.md');
+INSERT INTO `s_file` VALUES (8, '测试图片', '2021-04-30 09:19:11', 2, '1619745543919.jpg');
 
 -- ----------------------------
 -- Table structure for s_like
@@ -172,12 +236,23 @@ CREATE TABLE `s_like`  (
   `user_id` int(0) NOT NULL COMMENT '用户id',
   `article_id` int(0) NOT NULL COMMENT '文章id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 169 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of s_like
 -- ----------------------------
-INSERT INTO `s_like` VALUES (1, 2, 1);
+INSERT INTO `s_like` VALUES (66, 2, 5);
+INSERT INTO `s_like` VALUES (67, 2, 4);
+INSERT INTO `s_like` VALUES (100, 3, 1);
+INSERT INTO `s_like` VALUES (147, 2, 10);
+INSERT INTO `s_like` VALUES (152, 2, 2);
+INSERT INTO `s_like` VALUES (157, 2, 7);
+INSERT INTO `s_like` VALUES (158, 2, 1);
+INSERT INTO `s_like` VALUES (161, 2, 3);
+INSERT INTO `s_like` VALUES (163, 5, 5);
+INSERT INTO `s_like` VALUES (164, 5, 1);
+INSERT INTO `s_like` VALUES (168, 5, 3);
+INSERT INTO `s_like` VALUES (172, 2, 9);
 
 -- ----------------------------
 -- Table structure for s_question
@@ -189,7 +264,7 @@ CREATE TABLE `s_question`  (
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '标题',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of s_question
@@ -228,16 +303,19 @@ CREATE TABLE `s_user`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '最后更新时间',
   `header_pic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '头像地址',
+  `position` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '职位',
+  `company` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '公司',
+  `home_page` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '个人主页',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of s_user
 -- ----------------------------
-INSERT INTO `s_user` VALUES (1, 'siji', 20, '18625815964', '123', '第一个用户', '2021-03-07 13:33:02', '2021-03-07 13:33:05', 'https://cdn.jsdelivr.net/gh/zhangliyuangit/img/byau.jpg');
-INSERT INTO `s_user` VALUES (2, '利源', 21, '18714169517', 'liyuan611', '作者', '2021-03-14 19:29:37', '2021-03-14 19:29:39', NULL);
-INSERT INTO `s_user` VALUES (3, '小明', 30, '19725401286', '123', 'demo用户', '2021-03-14 21:38:20', '2021-03-14 21:38:23', NULL);
-INSERT INTO `s_user` VALUES (4, '小王', 21, '19739776639', '123', 'test用户', '2021-03-14 21:39:31', '2021-03-14 21:39:34', NULL);
-INSERT INTO `s_user` VALUES (5, '用户1616512740173', NULL, '13029905545', 'siji_1616512740173', NULL, '2021-03-23 23:19:00', NULL, NULL);
+INSERT INTO `s_user` VALUES (1, 'siji', 20, '18625815964', '123', '第一个用户', '2021-03-07 13:33:02', '2021-03-07 13:33:05', 'https://cdn.jsdelivr.net/gh/zhangliyuangit/img/byau.jpg', NULL, NULL, NULL);
+INSERT INTO `s_user` VALUES (2, '利源test', 21, '18714169517', 'liyuan611', '本站作者', '2021-03-14 19:29:37', '2021-04-16 10:53:32', 'http://192.168.2.1:9999/siji/1618541612406.jpg', '学生', '黑龙江八一农垦大学', 'https://zhangliyuanblog.club/');
+INSERT INTO `s_user` VALUES (3, '小明', 30, '19725401286', '123', 'demo用户', '2021-03-14 21:38:20', '2021-03-14 21:38:23', NULL, NULL, NULL, NULL);
+INSERT INTO `s_user` VALUES (4, '小王', 21, '19739776639', '123', 'test用户', '2021-03-14 21:39:31', '2021-03-14 21:39:34', NULL, NULL, NULL, NULL);
+INSERT INTO `s_user` VALUES (5, '用户1616512740173', NULL, '13029905545', 'siji_1616512740173', NULL, '2021-03-23 23:19:00', NULL, NULL, NULL, NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
