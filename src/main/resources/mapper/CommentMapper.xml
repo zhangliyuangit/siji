@@ -15,5 +15,9 @@
     <sql id="Base_Column_List">
         id, user_id, article_id, create_time, context
     </sql>
+    <select id="selectNumByArticleId" resultType="java.lang.Integer">
+        select count(*)
+        from s_comment where article_id = #{articleId};
+    </select>
 
 </mapper>

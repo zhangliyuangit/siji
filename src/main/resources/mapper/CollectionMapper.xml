@@ -14,5 +14,8 @@
     <sql id="Base_Column_List">
         id, create_time, user_id, name
     </sql>
+    <select id="selectArticleByFavoriteId" resultType="club.zhangliyuanblog.entity.Article">
+        select sa.id, sa.title, sa.thematic, sa.overview from s_article sa join s_collection_content scc on sa.id = scc.article_id where scc.collection_id = #{favoriteId}
+    </select>
 
 </mapper>

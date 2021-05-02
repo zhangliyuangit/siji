@@ -3,8 +3,11 @@ package club.zhangliyuanblog.service;
 import club.zhangliyuanblog.entity.Article;
 import club.zhangliyuanblog.vo.ArticleVo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import io.swagger.models.auth.In;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -42,4 +45,12 @@ public interface IArticleService extends IService<Article> {
      * @return 文章集合
      */
     List<ArticleVo> selectArticleByUserId(Integer userId);
+
+    /**
+     * 查询当前用户点赞的所有文章
+     * 并根据类型分类
+     * @param userId
+     * @return
+     */
+    Map<String, Set<ArticleVo>> selectArticleByLikeAndType(Integer userId);
 }

@@ -1,5 +1,6 @@
 package club.zhangliyuanblog.service.impl;
 
+import club.zhangliyuanblog.entity.Article;
 import club.zhangliyuanblog.entity.Collection;
 import club.zhangliyuanblog.entity.CollectionContent;
 import club.zhangliyuanblog.mapper.CollectionContentMapper;
@@ -56,5 +57,10 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
                     return collectionVo;
                 }).collect(Collectors.toList());
         return collectionVos;
+    }
+
+    @Override
+    public List<Article> selectArticleByFavoriteId(Integer favoriteId) {
+        return collectionMapper.selectArticleByFavoriteId(favoriteId);
     }
 }

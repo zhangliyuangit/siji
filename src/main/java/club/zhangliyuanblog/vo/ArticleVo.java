@@ -45,4 +45,7 @@ public class ArticleVo {
 
     /** 点赞数量*/
     private Integer likeNum;
+
+    /** 文章评论数*/
+    private Integer commentNum;
 }

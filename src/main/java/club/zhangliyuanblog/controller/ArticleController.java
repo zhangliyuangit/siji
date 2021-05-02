@@ -137,9 +137,23 @@ public class ArticleController {
     public Result findArticleByType(@PathVariable String type) {
         return Result.builder().data(iArticleService.selectArticleByType(type)).code(200).build();
     }
+
+
     @ApiOperation("根据用户id查询文章")
     @GetMapping("/findArticleByUserId/{userId}")
     public Result findArticlesByUserId(@PathVariable Integer userId) {
         return Result.builder().code(200).data(iArticleService.selectArticleByUserId(userId)).build();
+    }
+
+    @ApiOperation(value = "更新文章")
+    @PostMapping(value = "/update/article")
+    public void updateArticle(@RequestBody Article article) {
+        iArticleService.updateById(article);
+    }
+
+    @ApiOperation(value = "分类别展示文章信息")
+    @GetMapping(value = "/getArticleByLikeAndType/{userId}")
+    public Result getArticleByLikeAndType(@PathVariable Integer userId) {
+        return Result.builder().message("查询成功").data(iArticleService.selectArticleByLikeAndType(userId)).code(200).build();
     }
 }

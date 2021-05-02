@@ -23,7 +23,12 @@
             join s_type st on sat.type_id = st.id where st.name = #{type} order by sa.create_time desc
     </select>
     <select id="selectArticleByUserId" resultType="club.zhangliyuanblog.entity.Article">
-        select id,title,create_time
+        select id,title,create_time,thematic
         from s_article where user_id = #{userId} order by create_time desc;
+    </select>
+    <select id="selectArticleByLike" resultType="club.zhangliyuanblog.vo.ArticleVo">
+        select sa.id, sa.title, sa.overview, sa.create_time, sa.thematic
+        from s_article sa join s_like sl on sa.id = sl.article_id
+        where sl.user_id = #{userId}
     </select>
 </mapper>

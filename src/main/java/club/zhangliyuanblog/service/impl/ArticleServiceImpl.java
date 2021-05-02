@@ -13,8 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -126,10 +125,34 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         List<ArticleVo> articleVoList = articleMapper.selectArticleByUserId(userId).stream().map(article -> {
             ArticleVo articleVo = new ArticleVo();
             BeanUtils.copyProperties(article, articleVo);
+            // 文章类型
             articleVo.setTypes(typeMapper.selectTypesByArticleId(article.getId()));
+            // 文章点赞数
+            articleVo.setLikeNum(likeMapper.likeNum(article.getId()));
+            // 文章评论数
+            articleVo.setCommentNum(commentMapper.selectNumByArticleId(article.getId()));
             return articleVo;
         }).collect(Collectors.toList());
         return articleVoList;
+    }
+
+    @Override
+    public Map<String, Set<ArticleVo>> selectArticleByLikeAndType(Integer userId) {
+        List<ArticleVo> articleVos = articleMapper.selectArticleByLike(userId);
+        Map<String, Set<ArticleVo>> stringListMap = new HashMap<>();
+        articleVos.forEach(articleVo -> {
+            articleVo.setTypes(typeMapper.selectTypesByArticleId(articleVo.getId()));
+            articleVo.getTypes().forEach(type -> {
+                if (stringListMap.containsKey(type)) {
+                    stringListMap.get(type).add(articleVo);
+                } else {
+                    Set<ArticleVo> set = new HashSet<>();
+                    set.add(articleVo);
+                    stringListMap.put(type, set);
+                }
+            });
+        });
+        return stringListMap;
     }
 
 

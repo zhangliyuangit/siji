@@ -1,5 +1,6 @@
 package club.zhangliyuanblog.service;
 
+import club.zhangliyuanblog.entity.Article;
 import club.zhangliyuanblog.entity.Collection;
 import club.zhangliyuanblog.vo.CollectionVo;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -26,4 +27,12 @@ public interface ICollectionService extends IService<Collection> {
      * @return  收藏夹vo集合
      */
     List<CollectionVo> getCollectionsByUserId(Integer userId, Integer articleId);
+
+    /**
+     * 根据收藏夹id查询所有收藏集内的文章
+     * @param favoriteId 收藏夹id
+     * @return  文章
+     */
+    List<Article> selectArticleByFavoriteId(Integer favoriteId);
+
 }

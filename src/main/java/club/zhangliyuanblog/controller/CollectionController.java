@@ -1,6 +1,7 @@
 package club.zhangliyuanblog.controller;
 
 
+import club.zhangliyuanblog.entity.Article;
 import club.zhangliyuanblog.entity.Collection;
 import club.zhangliyuanblog.entity.CollectionContent;
 import club.zhangliyuanblog.service.ICollectionContentService;
@@ -60,4 +61,42 @@ public class CollectionController {
                 .eq("collection_id", collectionId)
                 .eq("article_id", articleId));
     }
+
+    @ApiOperation(value = "根据用户id查询所有收藏夹")
+    @GetMapping(value = "/findFavorite/{userId}")
+    public Result findFavoriteByUserId(@PathVariable(value = "userId") Integer userId) {
+        List<Collection> collectionList = collectionService.list(new QueryWrapper<Collection>().eq("user_id", userId));
+        return Result.builder().data(collectionList).code(200).message("查询成功").build();
+    }
+
+
+    @ApiOperation(value = "更新收藏夹")
+    @PostMapping(value = "/update")
+    public Result updateFavorite(@RequestBody Collection collection) {
+        collectionService.updateById(collection);
+        return Result.builder().message("更新成功").code(200).build();
+    }
+
+    @ApiOperation(value = "删除收藏夹")
+    @DeleteMapping(value = "/delete/{favoriteId}")
+    public void deleteFavoriteById(@PathVariable Integer favoriteId) {
+        // 删除收藏夹内容
+        collectionContentService.remove(new QueryWrapper<CollectionContent>().eq("collection_id", favoriteId));
+        // 删除收藏集
+        collectionService.removeById(favoriteId);
+    }
+
+    @ApiOperation(value = "根据收藏夹查询收藏夹内容")
+    @GetMapping(value = "/findCollectionContent/{collectionId}")
+    public Result findContentByCollectionId(@PathVariable(value = "collectionId") Integer collectionId) {
+        List<Article> articleList = collectionService.selectArticleByFavoriteId(collectionId);
+        return Result.builder().code(200).message("查询成功").data(articleList).build();
+    }
+
+    @ApiOperation(value = "根据id查询具体的收藏夹信息")
+    @GetMapping(value = "/get/{id}")
+    public Result getFavoriteById(@PathVariable(value = "id") Integer favoriteId) {
+        return Result.builder().data(collectionService.getById(favoriteId)).code(200).message("查询成功").build();
+    }
+
 }
