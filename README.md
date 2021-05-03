@@ -1,7 +1,7 @@
 ### 新版肆记 前后端分离版版本
 >本项目类似CSDN博客，支持保存文章和文件，采用前后端分离开发，用到的技术相对简单，用于本人前端不是特别好，所以前端充满了妥协。
 
-前端地址[](https://gitee.com/zhangliyuanblog/siji-v2-front-end)
+前端地址https://gitee.com/zhangliyuanblog/siji-v2-front-end
 
 #### 技术选型
 ##### 后端
