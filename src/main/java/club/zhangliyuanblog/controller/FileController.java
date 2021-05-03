@@ -3,6 +3,7 @@ package club.zhangliyuanblog.controller;
 import club.zhangliyuanblog.properties.SystemProperties;
 import club.zhangliyuanblog.service.IFileService;
 import club.zhangliyuanblog.vo.Result;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -111,9 +112,11 @@ public class FileController {
 
     @ApiOperation("分页查看文件")
     @GetMapping("/page/{currentPage}/{pageSize}")
-    public Result fileListByPage(@PathVariable Integer currentPage, @PathVariable Integer pageSize) {
+    public Result fileListByPage(@PathVariable(value = "currentPage") Integer currentPage,
+                                 @PathVariable(value = "pageSize") Integer pageSize,
+                                 @RequestParam(value = "name",required = false) String name) {
         Page<club.zhangliyuanblog.entity.File> page = new Page<>(currentPage, pageSize);
-        Page<club.zhangliyuanblog.entity.File> filePage = iFileService.page(page);
+        Page<club.zhangliyuanblog.entity.File> filePage = iFileService.page(page, new QueryWrapper<club.zhangliyuanblog.entity.File>().like("name", name == null ? "" : name));
         return Result.builder().message("查询成功").code(200).data(filePage).build();
     }
 

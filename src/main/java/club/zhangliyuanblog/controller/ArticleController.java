@@ -61,23 +61,20 @@ public class ArticleController {
     }
 
     /**
-     * 分页查询文章列表
-     * TODO 这块应该优化，不应该查询文章内容
-     * TODO 暂时没有加通过条件匹配
+     * 分页查询文章列表，如果当前有title则模糊匹配
+     * 如果没有title则查询全部文章
      * @param currentPage 当前页码
      * @param pageSize  每页显示条数
+     * @param title 文章标题。用于模糊搜索
      * @return 统一返回结果集
      */
     @ApiOperation("分页查询文章")
     @GetMapping("/page/{currentPage}/{pageSize}")
     public Result getArticleByPage(@PathVariable(value = "currentPage", required = false) Integer currentPage,
-                                   @PathVariable(value = "pageSize", required = false) Integer pageSize) {
-        // 非空处理
-        currentPage = currentPage == null ? 1 : currentPage;
-        pageSize = pageSize == null ? 5 : pageSize;
+                                   @PathVariable(value = "pageSize", required = false) Integer pageSize,
+                                   @RequestParam(required = false) String title) {
         IPage<Article> page = new Page<>(currentPage, pageSize);
-        // TODO 这里暂且只使用分页查找，没有加条件
-        IPage<Article> iPage = iArticleService.page(page);
+        IPage<Article> iPage = iArticleService.page(page, new QueryWrapper<Article>().like("title", title == null ? "" : title));
 
         return Result.builder()
                 .message("查询成功")
